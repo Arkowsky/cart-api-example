@@ -1,0 +1,19 @@
+parameters:
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  App\Cart\:
+    resource: '../'
+    exclude:
+      - '../Entity/'
+      - '../Kernel.php'
+      - '../Tests/'
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  App\Cart\Controller\:
+    resource: '../Controller/'
+    tags: ['controller.service_arguments']
