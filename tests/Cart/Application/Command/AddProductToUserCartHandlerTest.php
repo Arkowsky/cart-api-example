@@ -9,7 +9,9 @@ use App\Cart\Application\Command\AddProductToUserCartCommand;
 use App\Cart\Application\Command\AddProductToUserCartHandler;
 use App\Cart\Domain\CartRepositoryInterface;
 use App\Cart\Domain\Cart;
+use App\Cart\Domain\Product;
 use App\Cart\Domain\ProductId;
+use App\Cart\Domain\ProductRepositoryInterface;
 use App\Cart\Domain\UserCartFactory;
 use App\Cart\Domain\UserId;
 use App\Cart\Domain\Event\ProductAddedToCart;
@@ -40,6 +42,10 @@ class AddProductToUserCartHandlerTest extends TestCase
         $userCartFactory->create(UserId::fromId(self::USER_ID))->willReturn(
             $cart->reveal()
         );
+        $productRepository = $this->prophesize(ProductRepositoryInterface::class);
+        $productRepository->findById($productId)->willReturn(
+            Product::fromDBFields(['productId' => $productId->getProductId()->toBase32()])
+        );
 
         $envelope = new Envelope(new \stdClass());
         $messageBus->dispatch(
@@ -51,7 +57,8 @@ class AddProductToUserCartHandlerTest extends TestCase
         $commandHandler = new AddProductToUserCartHandler(
             $messageBus->reveal(),
             $cartRepository->reveal(),
-            $userCartFactory->reveal()
+            $userCartFactory->reveal(),
+            $productRepository->reveal()
         );
 
         $commandHandler(new AddProductToUserCartCommand(
