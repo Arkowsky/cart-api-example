@@ -44,6 +44,13 @@ class Product
      */
     private $priceCurrency;
 
+    public function __construct()
+    {
+        if (!$this->id) {
+            $this->id = Uuid::v4();
+        }
+    }
+
     public function getId(): Uuid
     {
         return $this->id;
