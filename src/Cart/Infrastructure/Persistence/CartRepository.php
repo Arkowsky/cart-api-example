@@ -14,14 +14,25 @@ class CartRepository implements CartRepositoryInterface
     public function getByUserId(UserId $userId)
     {
         // @TODO: add database
-        return [
+
+        $record = [
             'id' => 'b5b34004-1ee3-4476-813e-3a213fd2a1bf',
+            'userId' => 2,
             'products' => [
-                '0cf846aa-b521-4b01-8acf-7f46c20e12b6',
-                '2095d195-afe1-4752-a531-a183fe62865a'
+                [
+                    'id' => '0cf846aa-b521-4b01-8acf-7f46c20e12b6',
+                    'productId' => '0cf846aa-b521-4b01-8acf-7f46c20e12b6',
+                    'quantity' => 1
+                ],
+                [
+                    'id' => '2095d195-afe1-4752-a531-a183fe62865a',
+                    'productId' => '0cf846aa-b521-4b01-8acf-7f46c20e12b6',
+                    'quantity' => 2
+                ]
             ]
         ];
 
+        return Cart::fromDbRecord($record);
     }
 
     public function save(Cart $cart)

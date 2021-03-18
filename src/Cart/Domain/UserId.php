@@ -17,4 +17,9 @@ class UserId
     {
         $this->userId = $userId;
     }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
 }

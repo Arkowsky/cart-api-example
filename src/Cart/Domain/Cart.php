@@ -12,7 +12,7 @@ class Cart
     /** @var Uuid */
     private $id;
 
-    /** @var int */
+    /** @var UserId */
     private $userId;
 
     /** @var null|CartItem[] */
@@ -20,36 +20,39 @@ class Cart
 
     public static function createUserCart(UserId $userId, ?array $cartItems = null)
     {
-        $cart = new self($userId);
+        // @TODO: add assertions
+        $cart = new self(null, $userId);
         $cart->cartItems = $cartItems;
 
         return $cart;
     }
 
-    protected function __construct(UserId $userId)
+    public static function fromDbRecord(array $record)
     {
+        $cart = new self(Uuid::fromString($record['id']), UserId::fromId($record['userId']));
+        $cart->cartItems = array_map(function ($product) {
+            return CartItem::fromDbRecord($product);
+        }, $record['products']);
+
+        return $cart;
+    }
+
+    protected function __construct(?Uuid $id, UserId $userId)
+    {
+        $this->id = null === $id ? Uuid::v4() : $id;
         $this->userId = $userId;
     }
 
-    /**
-     * @return Uuid
-     */
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getUserId(): int
+    public function getUserId(): UserId
     {
         return $this->userId;
     }
 
-    /**
-     * @return null|CartItem[]
-     */
     public function getCartItems(): ?array
     {
         return $this->cartItems;

@@ -7,12 +7,20 @@ namespace App\Cart\Domain;
 
 class UserCartFactory
 {
+    private $cartRepository;
+
+    public function __construct(CartRepositoryInterface $cartRepository)
+    {
+        $this->cartRepository = $cartRepository;
+    }
+
     public function create(UserId $userId): Cart
     {
-        // if found cart by id
+        $cart = $this->cartRepository->getByUserId($userId);
 
-        // else
-        $cart = Cart::createUserCart($userId);
+        if (!$cart) {
+            $cart = Cart::createUserCart($userId);
+        }
 
         return $cart;
     }

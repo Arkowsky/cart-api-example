@@ -18,6 +18,22 @@ class CartItem
     /** @var int */
     private $quantity;
 
+    public static function fromDbRecord(array $record)
+    {
+        return new self(
+            $record['id'] ? Uuid::fromString($record['id']) : null,
+            ProductId::fromString($record['productId']),
+            $record['quantity']
+        );
+    }
+
+    protected function __construct(?Uuid $id, ProductId $productId, int $quantity)
+    {
+        $this->id = null === $id ? Uuid::v4() : $id;
+        $this->productId = $productId;
+        $this->quantity = $quantity;
+    }
+
     /**
      * @return Uuid
      */

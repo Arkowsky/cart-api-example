@@ -18,7 +18,7 @@ class GetMyCartControllerTest extends WebTestCase
         $contentDecoded = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($contentDecoded['id']);
-        $this->assertCount(2, $contentDecoded['products']);
+        $this->assertCount(2, $contentDecoded['cartItems']);
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 }
