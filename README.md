@@ -1,5 +1,9 @@
 # Cart and catalog API
 
+## Assumptions
+
+This project is made only for skills exercise. 
+
 ## Requirements:
 
 Client should be able to:
@@ -9,14 +13,11 @@ Client should be able to:
 - add product to the cart
 - cart can contain a max. of 3 products
 
-
-The delivery does not need to include a working code, we will just have a look at your coding style and ask about your decisions.
-
 ## Architectural Decision Records
 
 All decision made in project are stored in doc/adr/
 
-## Instalation
+## Installation
 
 ``composer install``
 
