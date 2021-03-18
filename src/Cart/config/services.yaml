@@ -5,15 +5,26 @@ services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    bind:
+      $userId: '%app.user_id%'
+
+  _instanceof:
+    App\Cart\Infrastructure\Messenger\CommandHandlerInterface:
+      tags:
+        - { name: messenger.message_handler, bus: command.bus }
+
+    App\Cart\Infrastructure\Messenger\QueryHandlerInterface:
+      tags:
+        - { name: messenger.message_handler, bus: query.bus }
 
   App\Cart\:
     resource: '../'
     exclude:
-      - '../Entity/'
       - '../Kernel.php'
-      - '../Tests/'
-  # controllers are imported separately to make sure services can be injected
-  # as action arguments even if you don't extend any base controller class
-  App\Cart\Controller\:
-    resource: '../Controller/'
+
+  App\Cart\UI\Api\:
+    resource: '../UI/Api/'
     tags: ['controller.service_arguments']
+
+  App\Cart\Domain\CartRepositoryInterface:
+    class: App\Cart\Infrastructure\Persistence\CartRepository

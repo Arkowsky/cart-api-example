@@ -1,2 +1,6 @@
 imports:
     - { resource: '../src/*/config/services.yaml' }
+
+parameters:
+    # @TODO: this should be taken from session
+    app.user_id: 2
