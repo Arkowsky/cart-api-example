@@ -24,3 +24,9 @@ All decision made in project are stored in doc/adr/
 
 ``vendor/bin/phpunit --testdox``
 
+## Run on dev environment
+
+You need to have symfony installed globally
+
+``symfony server:start``
+
