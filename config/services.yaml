@@ -4,3 +4,10 @@ imports:
 parameters:
     # @TODO: this should be taken from session
     app.user_id: 2
+
+services:
+    Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        public: false
+        tags:
+            - { name: 'serializer.normalizer' }
