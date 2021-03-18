@@ -19,8 +19,6 @@ services:
 
   App\Cart\:
     resource: '../'
-    exclude:
-      - '../Kernel.php'
 
   App\Cart\UI\Api\:
     resource: '../UI/Api/'

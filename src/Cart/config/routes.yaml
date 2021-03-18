@@ -1,9 +1,9 @@
 api_cart_get:
-    path: api/my_cart
+    path: api/cart/my_cart
     controller: App\Cart\UI\Api\GetMyCartController
     methods: GET
 
 api_cart_add_product_post:
-    path: api/my_cart
+    path: api/cart/my_cart
     controller: App\Cart\UI\Api\PostProductToMyCartController
     methods: POST

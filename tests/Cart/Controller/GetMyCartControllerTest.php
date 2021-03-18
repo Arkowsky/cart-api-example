@@ -13,7 +13,7 @@ class GetMyCartControllerTest extends WebTestCase
     public function test_it_should_get_my_cart_with_products()
     {
         $client = static::createClient();
-        $client->request('GET', '/api/my_cart');
+        $client->request('GET', '/api/cart/my_cart');
 
         $contentDecoded = json_decode($client->getResponse()->getContent(), true);
 

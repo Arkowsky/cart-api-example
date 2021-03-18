@@ -15,7 +15,7 @@ class PostProductToMyCartControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request(
             'POST',
-            '/api/my_cart',
+            '/api/cart/my_cart',
             [
                 'productId' => 'd2b3a83c-87bd-4879-a5c9-98781bd8d02b'
             ]
