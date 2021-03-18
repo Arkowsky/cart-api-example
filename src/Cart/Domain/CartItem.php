@@ -6,6 +6,7 @@ namespace App\Cart\Domain;
 
 
 use Symfony\Component\Uid\Uuid;
+use Webmozart\Assert\Assert;
 
 class CartItem
 {
@@ -38,6 +39,8 @@ class CartItem
 
     protected function __construct(?Uuid $id, ProductId $productId, int $quantity)
     {
+        Assert::greaterThan($quantity,0);
+
         $this->id = null === $id ? Uuid::v4() : $id;
         $this->productId = $productId;
         $this->quantity = $quantity;

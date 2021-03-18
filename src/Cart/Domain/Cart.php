@@ -20,7 +20,6 @@ class Cart
 
     public static function createUserCart(UserId $userId, ?array $cartItems = null)
     {
-        // @TODO: add assertions
         $cart = new self(null, $userId);
         $cart->cartItems = $cartItems;
 
