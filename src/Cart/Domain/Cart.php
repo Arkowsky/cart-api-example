@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Cart\Domain;
 
 
+use App\Cart\Domain\Exception\MaxCartItemsCountExceededException;
 use Symfony\Component\Uid\Uuid;
 
 class Cart
@@ -17,6 +18,8 @@ class Cart
 
     /** @var null|CartItem[] */
     private $cartItems;
+
+    public CONST MAX_CART_ITEMS = 3;
 
     public static function createUserCart(UserId $userId, ?array $cartItems = null)
     {
@@ -65,17 +68,17 @@ class Cart
 
         foreach ($cartItems as $cartItem) {
             if ($cartItem->getProductId() == $productId) {
-                /** @var CartItem $processedCartItem */
-                $processedCartItem = $cartItem;
-                $processedCartItem->increaseQuantity($quantity);
-                break;
+                $cartItem->increaseQuantity($quantity);
+                return;
             }
         }
 
-        if (!$processedCartItem instanceof CartItem) {
-            $processedCartItem = CartItem::fromProductId($productId, $quantity);
+        if (count($cartItems) + 1 >= self::MAX_CART_ITEMS) {
+            throw new MaxCartItemsCountExceededException(count($cartItems));
         }
 
-        return $processedCartItem;
+        $newCartItem = CartItem::fromProductId($productId, $quantity);
+
+        array_push($this->cartItems, $newCartItem);
     }
 }
