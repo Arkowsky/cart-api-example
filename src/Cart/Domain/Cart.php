@@ -60,26 +60,23 @@ class Cart
 
     public function addCartItem(ProductId $productId, int $quantity)
     {
-//        $processedCartItem = null;
-//
-//        $cartItems = $this->getCartItems();
-//
-//        foreach ($cartItems as $cartItem) {
-//            if ($cartItem->getProductId() === $product->getId()) {
-//                $processedCartItem = $cartItem;
-//                break;
-//            }
-//        }
-//
-//        if (!$processedCartItem instanceof CartItem) {
-//            $processedCartItem = (new CartItem())
-//                ->setProduct($product)
-//                ->setUserId($userId)
-//                ->setId($newCartItemId);
-//        }
-//
-//        $processedCartItem->setQuantity($quantity);
-//
-//        return $processedCartItem;
+        $processedCartItem = null;
+
+        $cartItems = $this->getCartItems();
+
+        foreach ($cartItems as $cartItem) {
+            if ($cartItem->getProductId() == $productId) {
+                /** @var CartItem $processedCartItem */
+                $processedCartItem = $cartItem;
+                $processedCartItem->increaseQuantity($quantity);
+                break;
+            }
+        }
+
+        if (!$processedCartItem instanceof CartItem) {
+            $processedCartItem = CartItem::fromProductId($productId, $quantity);
+        }
+
+        return $processedCartItem;
     }
 }

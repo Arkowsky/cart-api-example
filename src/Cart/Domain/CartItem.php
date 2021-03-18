@@ -27,6 +27,15 @@ class CartItem
         );
     }
 
+    public static function fromProductId(ProductId $productId, int $quantity)
+    {
+        return new self(
+            null,
+            $productId,
+            $quantity
+        );
+    }
+
     protected function __construct(?Uuid $id, ProductId $productId, int $quantity)
     {
         $this->id = null === $id ? Uuid::v4() : $id;
@@ -34,27 +43,23 @@ class CartItem
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return Uuid
-     */
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    public function increaseQuantity(int $quantity)
+    {
+        $this->quantity = $this->quantity + $quantity;
     }
 }
