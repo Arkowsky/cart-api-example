@@ -1,0 +1,14 @@
+api_products_collection_get:
+    path: api/catalogue/products
+    controller: App\Catalogue\Controller\GetProductsController
+    methods: GET
+
+api_products_post:
+    path: api/catalogue/products
+    controller: App\Catalogue\Controller\PostProductsController
+    methods: POST
+
+api_products_patch:
+    path: api/catalogue/products/{id}
+    controller: App\Catalogue\Controller\PatchProductsController
+    methods: PATCH
