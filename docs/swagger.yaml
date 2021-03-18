@@ -1,0 +1,21 @@
+swagger: "2.0"
+info:
+  title: Cart and products API
+  description: Cart and products API - example project and example partly swagger
+  version: 1.0.0
+host: localhost:8000
+basePath: /api/
+schemes:
+  - http
+paths:
+  catalogue/products:
+    get:
+      summary: Returns a list of products.
+      description: Returns a list of products with prices
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+
+  # @TODO: add more or generate by nelmio api bundle
