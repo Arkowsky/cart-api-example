@@ -32,4 +32,4 @@ The delivery does not need to include a working code, we will just have a look a
 
 ## Run tests
 
-``bin/phpunit --testdox``
+``vendor/bin/phpunit --testdox``
