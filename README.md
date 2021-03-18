@@ -17,6 +17,10 @@ Client should be able to:
 
 All decision made in project are stored in doc/adr/
 
+## Swagger definition
+
+Resources are documented in file doc/swagger.yaml
+
 ## Installation
 
 ``composer install``
