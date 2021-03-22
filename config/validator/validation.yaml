@@ -6,3 +6,8 @@ App\Catalogue\Entity\Product:
       - NotBlank: ~
     priceCurrency:
       - NotBlank: ~
+
+App\Cart\Infrastructure\DTO\AddProductToCartPayload:
+  properties:
+    productId:
+      - NotBlank: ~
