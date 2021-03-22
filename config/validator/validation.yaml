@@ -1,0 +1,8 @@
+App\Catalogue\Entity\Product:
+  properties:
+    name:
+      - NotBlank: ~
+    priceValue:
+      - NotBlank: ~
+    priceCurrency:
+      - NotBlank: ~

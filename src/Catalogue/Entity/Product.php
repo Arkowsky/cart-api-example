@@ -71,6 +71,26 @@ class Product
         $this->name = $name;
     }
 
+    public function getPriceValue(): string
+    {
+        return $this->priceValue;
+    }
+
+    public function getPriceCurrency(): string
+    {
+        return $this->priceCurrency;
+    }
+
+    public function setPriceValue(string $priceValue): void
+    {
+        $this->priceValue = $priceValue;
+    }
+
+    public function setPriceCurrency(string $priceCurrency): void
+    {
+        $this->priceCurrency = $priceCurrency;
+    }
+
     public function getPrice(): ?Money
     {
         return $this->priceValue && $this->priceCurrency
@@ -78,7 +98,7 @@ class Product
             : null;
     }
 
-    public function setPrice(Money $price): void
+    public function setPriceFromMoney(Money $price): void
     {
         $this->priceValue = $price->getAmount();
         $this->priceCurrency = $price->getCurrency()->getCode();

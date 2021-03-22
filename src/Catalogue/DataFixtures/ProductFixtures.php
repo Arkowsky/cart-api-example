@@ -21,7 +21,7 @@ class ProductFixtures extends Fixture
         for ($i = 1; $i <= 5; $i++) {
             $product = new Product();
             $product->setName('good product ' . $i);
-            $product->setPrice(
+            $product->setPriceFromMoney(
                 new Money(10 * $i, new Currency('PLN'))
             );
             $manager->persist($product);
@@ -31,7 +31,7 @@ class ProductFixtures extends Fixture
         $product = new Product();
         $product->setId(Uuid::fromString(self::PRODUCT_WITH_CONST_ID));
         $product->setName('well known product');
-        $product->setPrice(
+        $product->setPriceFromMoney(
             new Money(200, new Currency('PLN'))
         );
         $manager->persist($product);

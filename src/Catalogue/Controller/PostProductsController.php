@@ -6,24 +6,31 @@ namespace App\Catalogue\Controller;
 
 
 use App\Catalogue\Entity\Product;
+use App\Catalogue\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use Money\Currency;
-use Money\Money;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class PostProductsController extends AbstractFOSRestController
 {
-    public function __invoke(Request $request, EntityManagerInterface $entityManager): Response
+    public function __invoke(Request $request, EntityManagerInterface $entityManager)
     {
-        $price = new Money($request->get('price'), new Currency($request->get('currency')));
-        $name = $request->get('name');
+        $data = json_decode($request->getContent(), true);
+        $form = $this->createForm(ProductType::class, new Product());
+        $form->submit($data);
 
-        $product = new Product();
-        $product->setName($name);
-        $product->setPrice($price);
+        if (!$form->isValid()) {
+            $view = $this->view(
+                $form,
+                Response::HTTP_BAD_REQUEST
+            );
+
+            return $this->handleView($view);
+        }
+        /** @var Product $product */
+        $product = $form->getData();
 
         $entityManager->persist($product);
         $entityManager->flush();

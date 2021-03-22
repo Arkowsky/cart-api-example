@@ -6,10 +6,9 @@ namespace App\Catalogue\Controller;
 
 
 use App\Catalogue\Entity\Product;
+use App\Catalogue\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use Money\Currency;
-use Money\Money;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
@@ -19,6 +18,7 @@ class PatchProductsController extends AbstractFOSRestController
 {
     public function __invoke(string $id, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $data = json_decode($request->getContent(), true);
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
             ->find(Uuid::fromString($id)->toBinary());
@@ -27,13 +27,17 @@ class PatchProductsController extends AbstractFOSRestController
             throw $this->createNotFoundException('Product not found');
         }
 
-        $price = $request->get('price') && $request->get('currency')
-            ? new Money($request->get('price'), new Currency($request->get('currency')))
-            : null;
-        $name = $request->get('name');
+        $form = $this->createForm(ProductType::class, $product);
+        $form->submit($data, false);
 
-        $name ? $product->setName($name) : null;
-        $price ? $product->setPrice($price) : null;
+        if (!$form->isValid()) {
+            $view = $this->view(
+                $form,
+                Response::HTTP_BAD_REQUEST
+            );
+
+            return $this->handleView($view);
+        }
 
         $entityManager->flush();
 

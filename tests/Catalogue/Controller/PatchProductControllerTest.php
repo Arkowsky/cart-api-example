@@ -16,9 +16,12 @@ class PatchProductControllerTest extends WebTestCase
         $client->request(
             'PATCH',
             '/api/catalogue/products/' . ProductFixtures::PRODUCT_WITH_CONST_ID,
-            [
+            [],
+            [],
+            [],
+            json_encode([
                 'name' => 'Awesome product XXY'
-            ]
+            ])
         );
 
         $contentDecoded = json_decode($client->getResponse()->getContent(), true);
@@ -33,10 +36,13 @@ class PatchProductControllerTest extends WebTestCase
         $client->request(
             'PATCH',
             '/api/catalogue/products/' . ProductFixtures::PRODUCT_WITH_CONST_ID,
-            [
+            [],
+            [],
+            [],
+            json_encode([
                 'price' => 500,
-                'currency' => 'EUR'
-            ]
+                'currency' => 'EUR',
+            ])
         );
 
         $contentDecoded = json_decode($client->getResponse()->getContent(), true);
@@ -51,10 +57,13 @@ class PatchProductControllerTest extends WebTestCase
         $client->request(
             'PATCH',
             '/api/catalogue/products/cba3907e-81d1-4fbc-b3f7-51837c8b31f5',
-            [
+            [],
+            [],
+            [],
+            json_encode([
                 'price' => 500,
                 'currency' => 'EUR'
-            ]
+            ])
         );
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
